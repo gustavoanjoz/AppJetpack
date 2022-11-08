@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
+// Renderização do Aplicativo
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,26 +26,22 @@ class MainActivity : ComponentActivity() {
 
 data class Message(val author: String, val body: String)
 
+// Criação da função Composta do Card de Mensagem
 @Composable
 fun MessageCard(msg: com.example.aulateste.Message) {
-    // Add padding around our message
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
             painter = painterResource(R.drawable.profile_picture),
             contentDescription = "Contact profile picture",
             modifier = Modifier
-                // Set image size to 40 dp
                 .size(40.dp)
-                // Clip image to be shaped as a circle
                 .clip(CircleShape)
         )
 
-        // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(8.dp))
 
         Column {
             Text(text = msg.author)
-            // Add a vertical space between the author and message texts
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = msg.body)
         }
