@@ -1,7 +1,6 @@
 package com.example.aulateste
 
 import android.os.Bundle
-import android.os.Message
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -13,6 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.border
+import androidx.compose.material.MaterialTheme
+import android.content.res.Configuration
+import androidx.compose.material.Surface
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.aulateste.ui.theme.AulaTesteTheme
+
 
 // Renderização do Aplicativo
 class MainActivity : ComponentActivity() {
@@ -26,25 +32,51 @@ class MainActivity : ComponentActivity() {
 
 data class Message(val author: String, val body: String)
 
-// Criação da função Composta do Card de Mensagem
+// Criação da função Composta do Card de Mensagem Estilizado
 @Composable
 fun MessageCard(msg: com.example.aulateste.Message) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
             painter = painterResource(R.drawable.profile_picture),
-            contentDescription = "Contact profile picture",
+            contentDescription = null,
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
+                .border(1.5.dp, MaterialTheme.colors.primary, CircleShape)
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
         Column {
-            Text(text = msg.author)
+            Text(
+                text = msg.author,
+                color = MaterialTheme.colors.secondary,
+                style = MaterialTheme.typography.body1
+            )
+
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = msg.body)
+            Text(
+                text = msg.body,
+                modifier = Modifier.padding(all = 4.dp),
+                style = MaterialTheme.typography.body2)
         }
     }
 }
-  
+
+// Ativação da função de Dark Mode
+@Preview(name = "Light Mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark Mode"
+)
+@Composable
+fun PreviewMessageCard() {
+     AulaTesteTheme {
+        Surface {
+            MessageCard(
+                msg = Message("Lexi", "Hey, take a look at Jetpack Compose, it's great!")
+            )
+        }
+    }
+}
